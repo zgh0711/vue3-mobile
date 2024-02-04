@@ -42,6 +42,9 @@ export const useStore = defineStore({
 
       this.launched = true;
     },
+    logout() {
+      this.updateIdentity(null)
+    },
     getToken() {
       return localStorage.getItem('token');
     },

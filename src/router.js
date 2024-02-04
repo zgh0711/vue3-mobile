@@ -1,9 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import { useStore } from './store'
 import http from './utils/http.js'
 
 const router = createRouter({
-	history: createWebHistory(
+	history: createWebHashHistory(
 		import.meta.env.BASE_URL), scrollBehavior(to, from, savedPosition) {
 			return {
 				top: 0
@@ -11,11 +11,6 @@ const router = createRouter({
 		},
 	routes: [
 		{ path: '/', component: () => import('@/views/index.vue') },
-
-		// { path: '/register/:id', meta: { auth: false, keepAlive: true }, component: () => import('@/views/Register.vue') },
-		// { path: '/change/person/:id', meta: { auth: false }, component: () => import('@/views/ChangePerson.vue') },
-		// { path: '/change/company/:id', meta: { auth: false }, component: () => import('@/views/ChangeCompany.vue') },
-		// { path: '/binding/:code/:token', meta: { auth: false, title: "慧分账", }, component: () => import('@/views/Binding.vue') },
 	]
 })
 
@@ -67,6 +62,7 @@ router.beforeEach((to, from, next) => {
 });
 router.afterEach((to, from) => {
 	if (to.meta && to.meta.title) {
+    document.title = to.meta.title
 	}
 })
 

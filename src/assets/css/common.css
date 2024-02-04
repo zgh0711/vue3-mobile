@@ -1,0 +1,218 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
+  Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
+  sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #111111;
+  font-size: 14px;
+  background: #F3F3F3;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 指正常的未被访问过的链接*/
+a:link {
+  text-decoration: none;
+}
+
+/*指已经访问过的链接*/
+a:visited {
+  text-decoration: none;
+}
+
+/*指鼠标在链接*/
+a:hover {
+  text-decoration: none;
+}
+
+/* 指正在点的链接*/
+a:active {
+  text-decoration: none;
+}
+
+[type='password'], [type='text'], select, textarea, button {
+  border: none;
+}
+
+button {
+  padding: 0;
+}
+
+input, select, textarea {
+  all: unset;
+  box-sizing: border-box;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #A5A5A5;
+}
+::placeholder{color: #A5A5A5;}
+
+/*去除点击时的背景效果*/
+a, img {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  word-break: break-all;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-padding-before: 0;
+  -webkit-padding-after: 0;
+}
+
+/*避免 div 中 img 标签底部会多出一点的留白的问题*/
+img {
+  vertical-align: top;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.width-0{
+  width: 0;
+}
+.f1 {
+  flex: 1;
+}
+.f2 {
+  flex: 2;
+}
+.f3 {
+  flex: 3;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-around {
+  justify-content: space-around;
+}
+.justify-evenly {
+  justify-content: space-evenly;
+}
+.items-start {
+  align-items: flex-start;
+}
+.items-end {
+  align-items: flex-end;
+}
+.items-center {
+  align-items: center;
+}
+.self-start {
+  align-self: flex-start;
+}
+.self-end {
+  align-self: flex-end;
+}
+.self-center {
+  align-self: center;
+}
+
+
+.text-l {
+  text-align: left;
+}
+
+.text-c {
+  text-align: center;
+}
+
+.text-r {
+  text-align: right;
+}
+
+.oneLine {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.twoLine {
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2; /*要显示的行数*/
+  -webkit-box-orient: vertical;
+}
+
+.threeLine {
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3; /*要显示的行数*/
+  -webkit-box-orient: vertical;
+}
+
+/*横向滚动*/
+.scroll-x {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/*去除滚动条*/
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+/*
+  适配 iPhoneX 底部小黑条，在要适配 iPhoneX 的页面底部加入一个下列 class 的 div，
+  并给需要做适配的元素添加以下样式
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
+*/
+.iphoneX-adapt {
+  width: 100%;
+  bottom: 0;
+  position: fixed;
+  background-color: #FFFFFF;
+  height: constant(safe-area-inset-bottom);
+  height: env(safe-area-inset-bottom);
+}
+
+.iphoneX {
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
+}

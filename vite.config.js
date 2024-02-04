@@ -1,5 +1,6 @@
 import {VantResolver} from '@vant/auto-import-resolver'
 import {defineConfig} from 'vite'
+import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import vue from '@vitejs/plugin-vue'
 import pxtovw from 'postcss-px-to-viewport'
@@ -39,6 +40,11 @@ export default defineConfig({
     Components({
       resolvers: [VantResolver()],
     }),
+    AutoImport({
+      // 可以自定义文件生成的位置，默认是根目录下，使用ts的建议放src目录下
+      // dts: 'src/auto-imports.d.ts',
+      imports: ['vue', 'vue-router']
+    })
   ],
   resolve: {
     alias: {
@@ -47,11 +53,11 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    port: 8081,
+    port: 8088,
     proxy: {
       '/api': {
-        target: 'https://app.hbsk.com',
-        // target: 'https://tapp.hbsk.com',
+        // target: 'https://mapp.hbsk.com',
+        target: 'https://tmapp.hbsk.com',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, ''),
       }

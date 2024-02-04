@@ -1,206 +1,261 @@
-:root {
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
-  Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
-  sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* 由于 vant 中的主题变量也是在 :root 下声明的，所以在有些情况下会由于优先级的问题无法成功覆盖。
+通过 :root:root 可以显式地让你所写内容的优先级更高一些，从而确保主题变量的成功覆盖。 */
+:root:root {
+  --van-primary-color: #0089FA;
+  --van-text-color: #111111;
+  --van-cell-font-size: 14px;
+  --van-cell-text-color: #666666;
+  --van-cell-value-color: #111111;
+  --van-field-label-width: 92px;
+  --van-dialog-message-font-size: 16px;
+  /*--van-field-error-message-font-size: 10px;*/
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background: #F3F3F3;
-  box-sizing: border-box;
-  -webkit-text-size-adjust: none;
-  -webkit-overflow-scrolling: touch;
+
+.animated {
+  animation-duration: .3s !important;
+  -webkit-animation-duration: .3s !important;
+  animation-fill-mode: both !important;
+  -webkit-animation-fill-mode: both !important;
+  animation-name: fadeInRight;
+  -webkit-animation: fadeInRight;
 }
 
-* {
-  box-sizing: border-box;
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate(1000px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
 }
 
-a {
-  text-decoration: none;
+.btn-link {
+  border: none !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  background: transparent;
+}
+.btn-verify {
+  border: none !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  background: transparent;
 }
 
-/* 指正常的未被访问过的链接*/
-a:link {
-  text-decoration: none;
+.con-submit {
+  padding: 30px;
+}
+.btn-submit {
+  width: 100% !important;
+  height: 48px !important;
+  padding: 0 !important;
+  font-size: 18px !important;
 }
 
-/*指已经访问过的链接*/
-a:visited {
-  text-decoration: none;
+.btn-filter {
+  min-width: 60px !important;
+  height: 28px !important;
+  color: #111111 !important;
+  padding: 0 !important;
+  font-size: 12px !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+  border: 1px solid #FFFFFF !important;
+  margin-right: 8px !important;
 }
 
-/*指鼠标在链接*/
-a:hover {
-  text-decoration: none;
+.black-1 {
+  color: #111111;
 }
 
-/* 指正在点的链接*/
-a:active {
-  text-decoration: none;
+.black-6 {
+  color: #666666;
 }
 
-[type='password'], [type='text'], select, textarea, button {
-  border: none;
+.black-9 {
+  color: #999999;
 }
 
-button {
-  padding: 0;
+.bold {
+  font-weight: bold;
 }
 
-input, select, textarea {
-  all: unset;
-  box-sizing: border-box;
+.font-10 {
+  font-size: 10px;
+}
+.font-11 {
+  font-size: 11px;
 }
 
-input::-webkit-input-placeholder,
-textarea::-webkit-input-placeholder {
-  color: #A5A5A5;
+.font-12 {
+  font-size: 12px;
 }
-::placeholder{color: #A5A5A5;}
-
-/*去除点击时的背景效果*/
-a, img {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+.font-13 {
+  font-size: 13px;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
-  word-break: break-all;
-  -webkit-margin-before: 0;
-  -webkit-margin-after: 0;
-  -webkit-padding-before: 0;
-  -webkit-padding-after: 0;
+.font-14 {
+  font-size: 14px;
 }
 
-/*避免 div 中 img 标签底部会多出一点的留白的问题*/
-img {
-  vertical-align: top;
+.font-16 {
+  font-size: 16px;
 }
 
-.flex-row {
-  display: flex;
+.font-18 {
+  font-size: 18px;
 }
 
-.flex-col {
-  display: flex;
-  flex-direction: column;
+.font-20 {
+  font-size: 20px;
 }
 
-.f1 {
-  flex: 1;
+.font-22 {
+  font-size: 22px;
 }
-.justify-start {
-  justify-content: flex-start;
+
+.font-26 {
+  font-size: 26px;
 }
-.justify-end {
-  justify-content: flex-end;
+
+.m-t-3 {
+  margin-top: 3px;
 }
-.justify-center {
-  justify-content: center;
+.m-t-4 {
+  margin-top: 4px;
 }
-.justify-between {
-  justify-content: space-between;
+.m-t-8 {
+  margin-top: 8px;
 }
-.justify-around {
-  justify-content: space-around;
+.m-t-10 {
+  margin-top: 10px;
 }
-.justify-evenly {
-  justify-content: space-evenly;
+.m-t-20 {
+  margin-top: 20px;
 }
-.items-start {
-  align-items: flex-start;
+.m-t-30 {
+  margin-top: 30px;
 }
-.items-end {
-  align-items: flex-end;
+.m-b-4 {
+  margin-bottom: 4px;
 }
-.items-center {
+.m-b-8 {
+  margin-bottom: 8px;
+}
+.m-b-10 {
+  margin-bottom: 10px;
+}
+.m-b-12 {
+  margin-bottom: 16px;
+}
+.m-b-20 {
+  margin-bottom: 20px;
+}
+.m-l-4{
+  margin-left: 4px;
+}
+.m-l-8{
+  margin-left: 8px;
+}
+.m-l-16{
+  margin-left: 16px;
+}
+.m-r-4 {
+  margin-right: 4px;
+}
+.m-r-8 {
+  margin-right: 8px;
+}
+
+.p-8 {
+  padding: 8px;
+}
+.p-10 {
+  padding: 10px;
+}
+.p-12 {
+  padding: 12px;
+}
+.p-16 {
+  padding: 16px;
+}
+.p-b-20 {
+  padding-bottom: 20px;
+}
+
+.border-10{
+  border-radius: 10px;
+}
+.b-t-r-10{
+  border-radius: 10px 10px 0 0;
+}
+.b-d-l-10{
+  border-radius: 0 0 10px 10px;
+}
+
+.red {
+  color: #f53a42;
+}
+.blue {
+  color: #0089FA;
+}
+
+.page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.tag{
+  padding: 3px 10px;
+  border-radius: 20px;
+  &.green,
+  &.success,
+  &.accept {
+    color: #4CAF50;
+    background: rgba(76,175,80,0.1);
+  }
+  &.pending {
+    color: #666666;
+    background: rgba(102,102,102,0.1);
+  }
+  &.submit,
+  &.confirm,
+  &.process {
+    color: #0089FA;
+    background: rgba(0, 137, 250, 0.10);
+  }
+  &.failure,
+  &.reject {
+    color: #ed3540;
+    background: rgba(237,53,64,0.1);
+  }
+}
+
+.cell {
+  height: 50px;
+  max-height: 80px;
   align-items: center;
 }
-.self-start {
-  align-self: flex-start;
-}
-.self-end {
-  align-self: flex-end;
-}
-.self-center {
-  align-self: center;
+.cell:last-of-type{
+  border-radius: 0 0 10px 10px;
 }
 
-
-.text-l {
-  text-align: left;
+.card {
+  background: #FFFFFF;
+  border-radius: 10px;
 }
 
-.text-c {
-  text-align: center;
+.btn-fixed-b-placeholder {
+  padding: 40px;
+  margin-top: 10px;
 }
 
-.text-r {
-  text-align: right;
-}
-
-.oneLine {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.twoLine {
-  overflow: hidden;
-  display: -webkit-box;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 2; /*要显示的行数*/
-  -webkit-box-orient: vertical;
-}
-
-.threeLine {
-  overflow: hidden;
-  display: -webkit-box;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 3; /*要显示的行数*/
-  -webkit-box-orient: vertical;
-}
-
-/*横向滚动*/
-.scroll-x {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
-/*去除滚动条*/
-::-webkit-scrollbar {
-  display: none;
-}
-
-
-/*
-  适配 iPhoneX 底部小黑条，在要适配 iPhoneX 的页面底部加入一个下列 class 的 div，
-  并给需要做适配的元素添加以下样式
-  margin-bottom: constant(safe-area-inset-bottom);
-  margin-bottom: env(safe-area-inset-bottom);
-*/
-.iphoneX-adapt {
-  width: 100%;
-  bottom: 0;
+.con-btn-fixed-b {
   position: fixed;
-  background-color: #FFFFFF;
-  height: constant(safe-area-inset-bottom);
-  height: env(safe-area-inset-bottom);
-}
-
-.iphoneX {
-  margin-bottom: constant(safe-area-inset-bottom);
-  margin-bottom: env(safe-area-inset-bottom);
+  bottom: 0;
+  width: 100%;
+  padding: 16px 30px;
+  background: #ffffff;
 }

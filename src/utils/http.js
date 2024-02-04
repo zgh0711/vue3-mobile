@@ -1,6 +1,6 @@
 import axios from 'axios'
 import router from '/src/router.js'
-import { dehash64 } from './util'
+import hash64 from '@/utils/hash64.js'
 import { useStore } from '../store'
 import { closeToast, showLoadingToast, showToast } from 'vant'
 
@@ -136,7 +136,7 @@ const http = {
   decoding(json) {
     //请求解密
     if (json.data && typeof json.data === 'string') {
-      let s = dehash64(json.data)
+      let s = hash64.decode(json.data)
       // console.log('密串1', s);
       json.data = JSON.parse(s)
       // console.log('解密2', json.data)
