@@ -119,26 +119,39 @@ export const setDetailValues = (item, data) => {
         }
         continue
       }
-      if (typeof data[key] === 'object' && data[key] !== null) {
-        item.value = data[key]?.label || ''
-      }
     }
 
-    // 有两层对象的情况，从第二层对象取值
-    if (item.name.split('.').length === 2) {
-      let key1 = item.name.split('.')[0]
-      let key2 = item.name.split('.')[1]
-      item.value = data[key1][key2]
-      if (timeFields.includes(key2)) {
-        item.value = formatDateFull(data[key1][key2])
-      }
+    // 多级字段，如 order.created
+    if (item.name.split('.').length > 1) {
+      const fields = item.name.split('.')
+      item.value = getFieldValue(fields, data) || ''
     }
+  }
+
+  if (item.type === 'date') {
+    item.value = formatDateFull(item.value || '')
   }
 
   // type === decimal 的字段，保留两位小数
   if (item.type === 'decimal') {
     item.value = (item.value || 0).toFixed(2)
   }
+}
+
+/**
+ * 遍历 keys 数组，逐层深入对象
+ */
+export const getFieldValue = (keys, obj) => {
+  let current = obj
+  for (const key of keys) {
+    if (current !== undefined && current !== null && key in current) {
+      current = current[key]
+    } else {
+      return undefined
+    }
+  }
+
+  return current
 }
 
 /**
@@ -153,4 +166,12 @@ export const getBrowserType = () => {
   } else {
     return 'other'
   }
+}
+
+export const isInWechat = () => {
+  return /MicroMessenger/i.test(window.navigator.userAgent)
+}
+
+export const isIniOS = () => {
+  return /iPhone|iPad|iPod|iOS/i.test(window.navigator.userAgent)
 }

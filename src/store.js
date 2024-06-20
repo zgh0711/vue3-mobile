@@ -6,6 +6,7 @@ export const useStore = defineStore({
     launched: false,
     authed: false,
     identity: {},
+    theFirstLink: ''
   }),
   getters: {
     owner: (state) => {
@@ -54,5 +55,8 @@ export const useStore = defineStore({
     setSignId(id) {
       localStorage.setItem('sign_id', id);
     },
+    setTheFirstLink(url) {
+      this.theFirstLink = url
+    }
   }
 })
