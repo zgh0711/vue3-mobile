@@ -1,10 +1,10 @@
 import {VantResolver} from '@vant/auto-import-resolver'
 import {defineConfig} from 'vite'
-import AutoImport from 'unplugin-auto-import/vite'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import Components from 'unplugin-vue-components/vite'
-import vue from '@vitejs/plugin-vue'
 import pxtovw from 'postcss-px-to-viewport'
 import path from 'path'
+import vue from '@vitejs/plugin-vue'
 
 const my_pxtovw = pxtovw({
   //这里是设计稿宽度 自己修改
@@ -37,14 +37,10 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    VueDevTools(),
     Components({
       resolvers: [VantResolver()],
     }),
-    AutoImport({
-      // 可以自定义文件生成的位置，默认是根目录下，使用ts的建议放src目录下
-      // dts: 'src/auto-imports.d.ts',
-      imports: ['vue', 'vue-router']
-    })
   ],
   resolve: {
     alias: {
@@ -52,6 +48,7 @@ export default defineConfig({
     }
   },
   server: {
+    open: true,
     host: '0.0.0.0',
     port: 8088,
     proxy: {
