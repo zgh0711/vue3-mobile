@@ -15,6 +15,7 @@ const router = createRouter({
 })
 
 // 页面跳转及微信授权逻辑：
+// https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html
 // 1. 如果不在微信中，则直接跳转
 // 2. 如果在微信中，则判断是否已经授权，保存过用户微信信息，如果已经授权，则直接跳转
 // 3. 如果在微信中，且没有授权，则拼接授权链接，跳转到授权页面
@@ -47,7 +48,7 @@ router.beforeEach((to, from, next) => {
       appId = '正式服AppId'
       redirectUrl = encodeURIComponent('https://m.xxxxxx.com/WxAuth')
     }
-    window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${redirectUrl}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
+    window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${redirectUrl}&response_type=code&scope=snsapi_base#wechat_redirect`
   } else {
     next()
   }
