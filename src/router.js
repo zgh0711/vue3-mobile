@@ -1,69 +1,62 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
-import { useStore } from './store'
-import http from './utils/http.js'
+import { createRouter, createWebHashHistory } from 'vue-router'
+import { isInWechat } from '@/utils/util.js'
 
 const router = createRouter({
-	history: createWebHashHistory(
-		import.meta.env.BASE_URL), scrollBehavior(to, from, savedPosition) {
-			return {
-				top: 0
-			} // always scroll to top
-		},
-	routes: [
-		{ path: '/', component: () => import('@/views/index.vue') },
-	]
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to, from, savedPosition) {
+    return {
+      top: 0
+    } // always scroll to top
+  },
+  routes: [
+    { path: '/', component: () => import('@/views/index.vue') },
+    { path: '/WxAuth', name: 'WxAuth', component: () => import('@/views/WxAuth.vue') }
+  ]
 })
 
-const handler = (to, from, next) => {
-	let store = useStore();
-	if (to.meta && (to.meta.sign || to.meta.auth)) {
-		if (store.authed) {
-			next();
-		} else {
-			next({
-				path: '/login',
-				query: { redirect: to.fullPath }
-			})
-		}
-	} else {
-		next();
-	}
-}
-
-
+// 页面跳转及微信授权逻辑：
+// 1. 如果不在微信中，则直接跳转
+// 2. 如果在微信中，则判断是否已经授权，保存过用户微信信息，如果已经授权，则直接跳转
+// 3. 如果在微信中，且没有授权，则拼接授权链接，跳转到授权页面
+// 4. 微信授权成功后，会携带 code 跳回 /WxAuth 路由，此时对 wxAuth 路由放行，进入 WxAuth 路由，
+// 5. WxAuth 路由中，根据微信返回的 code 调用后端接口获取微信用户信息，保存到 localStorage 中，
+// 6. 从 sessionStorage 中取出 wxRedirectUrl ，跳转到之前的页面
 router.beforeEach((to, from, next) => {
-	// http://192.168.1.243:8081?sign_id=16946
-	// 如果链接里面有 sign_id 表示是从签约网站完成签约后跳回的链接， 这时要将 sign_id取出并存入 store，
-	// 以达到免密登录的目的。取出 sign_id 后需要将链接中的 sign_id 删除，否则不能跳转到首页
-	let store = useStore()
-	if (window.location.search.startsWith('?sign_id=')) {
-		let sign_id = window.location.search.substring(9)
-		store.setSignId(sign_id)
-		window.location.href = window.location.href.replace(`?sign_id=${sign_id}`, '')
+  if (!isInWechat()) {
+    next()
+    return
+  }
 
-		handler(to, from, next)
-		return
-	}
+  if (to.name === 'WxAuth') {
+    next()
+    return
+  }
 
-	if (store.launched) {
-		handler(to, from, next)
-	} else {
-		//首次访问先launch返回再往下走
-		let data = {};
-		http.post('/launch', data, { loading: false, feedback: false }).then(res => {
-			let ajax = res.data;
-			store.launch(ajax.data);
-			document.title = ajax.data.config.title;
-			handler(to, from, next);
-		}).catch(err => {
-			handler(to, from, next);
-		});
-	}
-});
+  const wxUserInfo = localStorage.getItem('wxUserInfo')
+  if (!wxUserInfo) {
+    // 保存当前路由地址，/WxAuth 中获取到微信信息后跳转到该路由
+    sessionStorage.setItem('wxRedirectUrl', to.fullPath)
+
+    // 请求微信授权,授权成功后跳回 redirectUrl，这里是 /WxAuth 路由
+    //todo 注意修改 appId 和应用访问 URL
+    let appId = '测试服AppId'
+    let redirectUrl = encodeURIComponent('https://m1.xxxxxx.com/WxAuth')
+
+    // 判断是否为正式环境
+    if (window.location.origin.indexOf('https://m.xxxxxx.com') !== -1) {
+      appId = '正式服AppId'
+      redirectUrl = encodeURIComponent('https://m.xxxxxx.com/WxAuth')
+    }
+    window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${redirectUrl}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
+  } else {
+    next()
+  }
+})
+
 router.afterEach((to, from) => {
-	if (to.meta && to.meta.title) {
+  if (to.meta && to.meta.title) {
     document.title = to.meta.title
-	}
+  }
 })
 
 export default router
